@@ -5,6 +5,7 @@ import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
 import net.minecraft.text.Text;
 import net.rosemods.betteruiscale.MaxSuppliableIntSliderCallbacks;
+import net.rosemods.betteruiscale.ScaleFactorUtil;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -54,7 +55,8 @@ public class MixinGameOptions {
         if(value == 0) {
             return GameOptions.getGenericValueText(optionText, Text.translatable("options.guiScale.auto"));
         } else {
-            return GameOptions.getGenericValueText(optionText, value);
+            double scale = ScaleFactorUtil.fromInternalScaleFactor(value.doubleValue());
+            return Text.translatable("options.percent_value", optionText, (int) (scale * 100f));
         }
     }
 }

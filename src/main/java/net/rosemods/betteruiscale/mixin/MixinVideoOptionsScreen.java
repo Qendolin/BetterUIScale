@@ -38,6 +38,7 @@ public class MixinVideoOptionsScreen extends GameOptionsScreen {
         prevGuiScale = gameOptions.getGuiScale().getValue();
     }
 
+    // FIXME: gui scale does not update when using keyboard controls, see: https://bugs.mojang.com/browse/MC-166361
     @Inject(method = "mouseReleased", at = @At("RETURN"))
     private void applyGuiScaleUpdate(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir) {
         assert this.client != null;
