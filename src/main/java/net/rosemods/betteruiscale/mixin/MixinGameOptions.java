@@ -5,8 +5,10 @@ import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
 import net.minecraft.text.Text;
 import net.rosemods.betteruiscale.MaxSuppliableIntSliderCallbacks;
+import net.rosemods.betteruiscale.ScaleFactorUtil;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.Slice;
@@ -14,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(GameOptions.class)
 public class MixinGameOptions {
-    @SuppressWarnings("unchecked")
     @ModifyArgs(
         method = "<init>",
         at = @At(
@@ -37,7 +38,7 @@ public class MixinGameOptions {
             )
         )
     )
-    private <T> void modifyGuiScaleOption(Args args) {
+    private void modifyGuiScaleOption(Args args) {
         args.set(3, new MaxSuppliableIntSliderCallbacks(0, () -> {
             MinecraftClient minecraftClient = MinecraftClient.getInstance();
             if (!minecraftClient.isRunning()) {
@@ -49,11 +50,13 @@ public class MixinGameOptions {
         args.set(2, textGetter);
     }
 
+    @Unique
     private static Text guiScaleValueToText(Text optionText, Integer value) {
         if(value == 0) {
             return GameOptions.getGenericValueText(optionText, Text.translatable("options.guiScale.auto"));
         } else {
-            return GameOptions.getGenericValueText(optionText, value);
+            double scale = ScaleFactorUtil.fromInternalScaleFactor(value.doubleValue());
+            return Text.translatable("options.percent_value", optionText, (int) (scale * 100f));
         }
     }
 }
