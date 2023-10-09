@@ -4,9 +4,9 @@ import com.google.gson.*;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.option.SimpleOption;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.Shader;
 import net.minecraft.text.Text;
 
 import java.io.FileReader;
@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Config {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().setLenient().create();
@@ -31,7 +32,7 @@ public class Config {
         value -> {
             MinecraftClient client = MinecraftClient.getInstance();
             client.execute(() -> {
-                ShaderProgram textShader = GameRenderer.getRenderTypeTextProgram();
+                Shader textShader = GameRenderer.getRenderTypeTextShader();
                 if(textShader != null) {
                     textShader.getUniformOrDefault("betteruiscale_smoothness").set(value.floatValue() / FONT_SMOOTHING_SCALE);
                 }
@@ -85,7 +86,8 @@ public class Config {
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     protected void deserialize(JsonElement jsonElement) throws JsonParseException {
-        Map<String, JsonElement> jsonEntries = jsonElement.getAsJsonObject().asMap();
+        Map<String, JsonElement> jsonEntries = jsonElement.getAsJsonObject().entrySet().stream()
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));;
         for (Map.Entry<String, SimpleOption<?>> entry : getOptions().entrySet()) {
             SimpleOption option = entry.getValue();
             String key = entry.getKey();
