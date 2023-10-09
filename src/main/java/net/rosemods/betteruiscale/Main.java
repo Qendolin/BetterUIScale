@@ -1,8 +1,6 @@
 package net.rosemods.betteruiscale;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.fabricmc.fabric.impl.resource.loader.ModResourcePackCreator;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 
@@ -19,13 +17,13 @@ public class Main implements ClientModInitializer {
         return config;
     }
 
-    public static Path configPath() {
-        return FabricLoader.getInstance().getConfigDir().resolve(MODID+".json");
-    }
-
     @Override
     public void onInitializeClient() {
         config = Config.load(configPath());
         config.save(configPath());
+    }
+
+    public static Path configPath() {
+        return FabricLoader.getInstance().getConfigDir().resolve(MODID + ".json");
     }
 }
