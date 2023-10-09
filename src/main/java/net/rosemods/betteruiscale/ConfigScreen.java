@@ -1,10 +1,11 @@
 package net.rosemods.betteruiscale;
 
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.OptionListWidget;
 import net.minecraft.client.option.SimpleOption;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 
@@ -42,11 +43,11 @@ public class ConfigScreen
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float tickDelta) {
-        renderBackground(context);
-        list.render(context, mouseX, mouseY, tickDelta);
-        context.drawCenteredTextWithShadow(textRenderer, title, width / 2, 20, 0xFFFFFF);
-        super.render(context, mouseX, mouseY, tickDelta);
+    public void render(MatrixStack stack, int mouseX, int mouseY, float tickDelta) {
+        renderBackground(stack);
+        list.render(stack, mouseX, mouseY, tickDelta);
+        DrawableHelper.drawCenteredTextWithShadow(stack, textRenderer, title, width / 2, 20, 0xFFFFFF);
+        super.render(stack, mouseX, mouseY, tickDelta);
     }
 }
 
