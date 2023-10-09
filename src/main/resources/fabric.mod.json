@@ -10,12 +10,19 @@
     "Qendolin"
   ],
   "contact": {
-    "sources": "https://github.com/Qendolin/BetterUIScale"
+    "homepage": "https://github.com/Qendolin/BetterUIScale",
+    "sources": "https://github.com/Qendolin/BetterUIScale",
+    "issues": "https://github.com/Qendolin/better-clouds/issues"
   },
 
   "license": "CC0-1.0",
+  "icon": "assets/betteruiscale/icon.png",
 
   "environment": "*",
+  "entrypoints": {
+    "client": [ "net.rosemods.betteruiscale.Main" ],
+    "modmenu": [ "net.rosemods.betteruiscale.ModMenuIntegration" ]
+  },
   "mixins": [
     "betteruiscale.mixins.json"
   ],
@@ -26,6 +33,9 @@
     "minecraft": ">=1.19.4",
     "java": ">=16",
     "fabric": "*"
+  },
+  "recommends": {
+    "modmenu": "*"
   },
   "suggests": {
     "sodium-fabric": "*"
