@@ -9,20 +9,19 @@ import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.function.IntSupplier;
 
-@Environment(value= EnvType.CLIENT)
-public record MaxSuppliableIntSliderCallbacks(int minInclusive, IntSupplier maxSupplier, int encodableMaxInclusive) implements SimpleOption.IntSliderCallbacks
-{
-    @Override
-    public int maxInclusive() {
-        return this.maxSupplier.getAsInt();
-    }
-
+@Environment(value = EnvType.CLIENT)
+public record MaxSuppliableIntSliderCallbacks(int minInclusive, IntSupplier maxSupplier,
+                                              int encodableMaxInclusive) implements SimpleOption.IntSliderCallbacks {
     @Override
     public Optional<Integer> validate(Integer integer) {
         return Optional.of(MathHelper.clamp(integer, this.minInclusive(), this.maxInclusive()));
+    }
+
+    @Override
+    public int maxInclusive() {
+        return this.maxSupplier.getAsInt();
     }
 
     @Override
