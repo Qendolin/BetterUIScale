@@ -52,7 +52,7 @@ public class MixinGameOptions {
 
     @Unique
     private static Text guiScaleValueToText(Text optionText, Integer value) {
-        if(value == 0) {
+        if (value == 0) {
             return GameOptions.getGenericValueText(optionText, Text.translatable("options.guiScale.auto"));
         } else {
             double scale = ScaleFactorUtil.fromInternalScaleFactor(value.doubleValue());

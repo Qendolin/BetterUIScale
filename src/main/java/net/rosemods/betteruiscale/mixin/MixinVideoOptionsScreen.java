@@ -36,7 +36,7 @@ public class MixinVideoOptionsScreen extends GameOptionsScreen {
     // FIXME: gui scale does not update when using keyboard controls, see: https://bugs.mojang.com/browse/MC-166361
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        boolean result  = super.mouseReleased(mouseX, mouseY, button);
+        boolean result = super.mouseReleased(mouseX, mouseY, button);
         assert this.client != null;
         if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && this.gameOptions.getGuiScale().getValue() != prevGuiScale) {
             this.client.onResolutionChanged();
