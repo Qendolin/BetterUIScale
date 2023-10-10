@@ -30,13 +30,18 @@ public class Config {
         (int) FONT_SMOOTHING_SCALE,
         value -> {
             MinecraftClient client = MinecraftClient.getInstance();
-            client.execute(() -> {
-                ShaderProgram textShader = GameRenderer.getRenderTypeTextProgram();
-                if (textShader != null) {
-                    textShader.getUniformOrDefault("betteruiscale_smoothness").set(value.floatValue() / FONT_SMOOTHING_SCALE);
-                }
-            });
+            client.execute(this::setFontSmoothingUniform);
         });
+
+    public void setFontSmoothingUniform() {
+        ShaderProgram textShader = GameRenderer.getRenderTypeTextProgram();
+        if (textShader != null) {
+            float value = fontSmoothing().getValue().floatValue() / FONT_SMOOTHING_SCALE;
+            textShader.getUniformOrDefault("betteruiscale_smoothness").set(value);
+        } else {
+            if(Main.IS_DEV) Main.LOGGER.error("Shader not ready!");
+        }
+    }
 
     private static Text getPercentValueText(Text prefix, double value) {
         return Text.translatable("options.percent_value", prefix, (int) (value * 100.0));
