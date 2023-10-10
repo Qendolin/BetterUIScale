@@ -48,6 +48,12 @@ public class ConfigScreen
         list.render(stack, mouseX, mouseY, tickDelta);
         DrawableHelper.drawCenteredTextWithShadow(stack, textRenderer, title, width / 2, 20, 0xFFFFFF);
         super.render(stack, mouseX, mouseY, tickDelta);
+
+    }
+
+    @Override
+    public void renderBackground(MatrixStack stack) {
+        this.renderBackgroundTexture(stack);
     }
 }
 
