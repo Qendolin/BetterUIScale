@@ -49,7 +49,8 @@ public class ConfigScreen
         super.render(context, mouseX, mouseY, tickDelta);
     }
 
-    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+    @Override
+    public void renderBackground(DrawContext context) {
         this.renderBackgroundTexture(context);
     }
 }
