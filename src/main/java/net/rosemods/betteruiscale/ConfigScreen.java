@@ -48,5 +48,9 @@ public class ConfigScreen
         context.drawCenteredTextWithShadow(textRenderer, title, width / 2, 20, 0xFFFFFF);
         super.render(context, mouseX, mouseY, tickDelta);
     }
+
+    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderBackgroundTexture(context);
+    }
 }
 
